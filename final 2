@@ -1,0 +1,46 @@
+def eh_primo(n):
+    """Verifica se um número é primo."""
+    if n <= 1:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+numero_original = input("Digite um número: ")
+numero = numero_original
+base = int(input("Digite a base do polinômio (ex: 7, 11, 13...): "))
+iteracao = 0
+
+while True:
+    digitos = [int(d) for d in str(numero)]
+    resultado = 0
+
+    for i in range(len(digitos)):
+        potencia = len(digitos) - 1 - i
+        resultado += digitos[i] * ((10 - base) ** potencia)
+
+    iteracao += 1
+    print(f"Iteração {iteracao}: {numero} → {resultado}")
+
+    if resultado == 0 or eh_primo(resultado) or abs(resultado) < 10:
+        print(f"\nFim após {iteracao} iterações!")
+
+        if resultado == 0:
+            motivo = "divisível (resultado zero)"
+        elif eh_primo(resultado):
+            motivo = "primo"
+        else:
+            motivo = "um número de 1 dígito"
+
+        print(f"Motivo: {resultado} é {motivo}.")
+
+        # Verificação de divisibilidade
+        if resultado == base or resultado == 0:
+            print(f"\n✅ O número {numero_original} é divisível por {base}.")
+        else:
+            print(f"\n❌ O número {numero_original} *NÃO* é divisível por {base}.")
+        
+        break
+
+    numero = resultado
